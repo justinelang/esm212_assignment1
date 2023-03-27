@@ -144,7 +144,7 @@ accum_all <- specaccum(subplots_40)
 # plot_sub <- plot(accum_all, xlab = "subplots", ylab = "species")
 
 native <- species %>%
-  filter(Native == 1)
+  filter(Native == 1, na.rm = TRUE)
 
 exotic <- species %>%
   filter(Native == 0)
@@ -232,7 +232,7 @@ plots_bray_diss_n <- vegdist(plots_spp_n,method="bray")
 ```
 
 
-
+## Cover Data
 
 ```{r}
 #Analyze cover data
@@ -256,6 +256,43 @@ plots_bray_diss_n <- vegdist(plots_spp_n,method="bray")
 	plots_hclust_pa <- hclust(plots_bray_diss,method="average")
 		plot(plots_hclust_pa)
 ```
+
+
+### Native
+
+```{r}
+### Filter by native
+
+sub_native_cover <- covdat %>% 
+  select(any_of(names(native_wide)))
+```
+
+```{r}
+#Analyze cover data
+#Calculate area-weighted cover, total area sampled = 10 *0.25 + 2*2.5 = 7.5 sq m
+	p1_covn <- (2.5/7.5)*apply(sub_native_cover[1:10,],2,mean) + 
+			(5/7.5)*apply(sub_native_cover[11:12,],2,mean)
+	p2_covn <- (2.5/7.5)*apply(sub_native_cover[13:22,],2,mean) + 
+			(5/7.5)*apply(sub_native_cover[23:24,],2,mean)
+	p3_covn <- (2.5/7.5)*apply(sub_native_cover[25:34,],2,mean) + 
+			(5/7.5)*apply(sub_native_cover[35:36,],2,mean)
+	p4_covn <- (2.5/7.5)*apply(sub_native_cover[37:46,],2,mean) + 
+			(5/7.5)*apply(sub_native_cover[47:48,],2,mean)
+```
+
+```{r}
+#Analyze plot dissimilarity based on cover
+	plots_cov_n <- rbind(p1_covn,p2_covn,p3_covn,p4_covn)
+	plots_euclid_diss_n <- vegdist(plots_cov_n,method="euclidean")
+	plots_hclust_n <- hclust(plots_euclid_diss_n,method="average")		#cluster analysis of plots (contrived)
+		plot(plots_hclust_n)
+	plots_hclust_pa_n <- hclust(plots_bray_diss_n,method="average")
+		plot(plots_hclust_pa_n)
+```
+
+
+
+## Plot Diversity
 
 ```{r}
 #Analyze plot diversity
