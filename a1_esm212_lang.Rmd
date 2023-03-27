@@ -137,24 +137,24 @@ specpool(plots_spp)
 
 species <- read_csv(here("data", "grassland_common_species_ex1.csv"))
 
-subplots_40 <- padat[c(1:10,13:22,25:34,37:46),]
+# subplots_40 <- padat[c(1:10,13:22,25:34,37:46),]
 
 accum_all <- specaccum(subplots_40)
 
 # plot_sub <- plot(accum_all, xlab = "subplots", ylab = "species")
 
 native <- species %>%
-  filter(Native == 1, na.rm = TRUE)
+  filter(Native == 1) %>% 
+  filter(is.na(Native) == F)
 
 exotic <- species %>%
   filter(Native == 0)
 
 native_wide <- native %>% 
   pivot_wider(names_from = Code,
-              values_from = Native) %>% 
-  select(, 10:ncol(.))
+              values_from = Native)
 
-sub_native <- subplots_40 %>% 
+sub_native <- padat %>% 
   select(any_of(names(native_wide)))
 
 
@@ -216,20 +216,20 @@ plots_bray_diss
 ### Native
 
 ```{r}
-sub_native_clean <- sub_native %>% 
-  drop_na()
+# sub_native_clean <- sub_native
 
 #calculate Bray-Curtis dissimilarity between plots
 #First, aggregate subplot data
-	p1n <- apply(sub_native_clean[1:12,],2,max)
-	p2n <- apply(sub_native_clean[13:24,],2,max)
-	p3n <- apply(sub_native_clean[25:36,],2,max)
-	p4n <- apply(sub_native_clean[37:48,],2,max)
+	p1n <- apply(sub_native[1:10,],2,max)
+	p2n <- apply(sub_native[13:22,],2,max)
+	p3n <- apply(sub_native[25:34,],2,max)
+	p4n <- apply(sub_native[37:46,],2,max)
 # create new matrix to calculate pairwise plot dissimilarity
 	plots_spp_n <- rbind(p1n,p2n,p3n,p4n)
 #produce dissimilarity matrix
 plots_bray_diss_n <- vegdist(plots_spp_n,method="bray")
 ```
+
 
 
 ## Cover Data
@@ -299,8 +299,24 @@ sub_native_cover <- covdat %>%
 	plots_shannon <- diversity(plots_cov,index="shannon") 	#shannon H'
 	plots_simpson <- diversity(plots_cov,index="simpson")	#simpson diversity
 	plots_richness <- specnumber(plots_cov)					#species richness
+	
+	plots_shannon
+	plots_simpson
+	plots_richness
 ```
 
+
+### Native
+
+```{r}
+plots_sh_n <- diversity(plots_cov_n,index="shannon") 
+plots_simp_n <- diversity(plots_cov_n,index="simpson")	#simpson diversity
+plots_rich_n <- specnumber(plots_cov_n)					#species richness
+
+plots_sh_n
+plots_simp_n
+plots_rich_n
+```
 
 
 
