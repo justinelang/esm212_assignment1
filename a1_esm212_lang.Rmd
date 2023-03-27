@@ -1,0 +1,284 @@
+---
+title: "Assignment 1"
+author: "Justine Lang"
+date: "2023-03-27"
+output: 
+  html_document: 
+    code_folding: hide
+---
+
+```{r setup, echo = TRUE, warning = FALSE, message = FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+
+library(here)
+library(tidyverse)
+library(janitor)
+library(vegan)
+library(tidyr)
+library(dplyr)
+```
+
+
+```{r}
+### Read in data
+
+# cover_2022 <- read_csv(here("data", "grassland_dat_cover_2022.csv"))
+# 
+# cover <- read_csv(here("data", "grassland_dat_cover.csv"))
+# 
+# species <- read_csv(here("data", "grassland_common_species_ex1.csv"))
+# 
+# pa_2022 <- read_csv(here("data", "grassland_dat_pa_2022.csv"))
+# 
+# pa <- read_csv(here("data", "grassland_dat_pa.csv"))
+```
+
+```{r}
+#read presence-absence data
+
+grasspa <- read.csv(here("data", "grassland_dat_pa.csv"),header=TRUE)
+
+padat <- grasspa[,4:40]	#plot x species P/A matrix in format for vegan analysis
+```
+
+```{r}
+#read cover data
+	grasscov <- read.csv(here("data", "grassland_dat_cover.csv"),header=TRUE)
+	covdat <- grasscov[,4:40]	#plot x species cover matrix in format for vegan analysis
+```
+
+
+
+### Accumulation Curves - 10 Subplots
+
+```{r}
+#create exact species accumulation curves for 4 plots using 10 subplots
+	accum1 <- specaccum(padat[1:10,]) 	#plot 1, subplots 1-10
+	accum2 <- specaccum(padat[13:22,])	#plot 2, subplots 1-10
+	accum3 <- specaccum(padat[25:34,])	#plot 3, subplots 1-10
+	accum4 <- specaccum(padat[37:46,])	#plot 4, subplots 1-10
+```
+
+```{r}
+#plot accumulation curves for each plot
+	plot(accum1,ylim=c(0,20),xlab="subplots",ylab="species")
+		lines(accum2,col="red")
+		lines(accum3,col="blue")
+		lines(accum4,col="green")
+	 	text(10.1,9,"V")	#valley plot
+	 	text(10.1,14,"N") #North plot
+	 	text(10.1,16,"S") #South plot
+	 	text(10.1,18,"N2") #second north plot
+```
+
+
+### Accumulation Curves - 12 Subplots
+
+```{r}
+#create exact species accumulation curves for 4 plots using 12 subplots
+	accum1b <- specaccum(padat[1:12,]) 	#plot 1, subplots 1-10
+	accum2b <- specaccum(padat[13:24,])	#plot 2, subplots 1-10
+	accum3b <- specaccum(padat[25:36,])	#plot 3, subplots 1-10
+	accum4b <- specaccum(padat[37:48,])	#plot 4, subplots 1-10
+```
+
+```{r}
+#plot accumulation curves for each plot, with subplots 11 and 12
+	plot(accum1b,ylim=c(0,25),xlab="subplots",ylab="species")
+		lines(accum2b,col="red")
+		lines(accum3b,col="blue")
+		lines(accum4b,col="green")
+	 	text(12.1,9,"V")	#valley plot
+	 	text(12.1,14,"N") #North plot
+	 	text(12.1,16,"S") #South plot
+	 	text(12.1,22,"N2") #second north plot
+```
+
+
+### Single Curve - 40 Subplots
+
+```{r}
+#plot single accumulation curve using 40 subplots
+	accum_allsubplots <- specaccum(padat[c(1:10,13:22,25:34,37:46),])
+	plot(accum_allsubplots,xlab="subplots",ylab="species")
+```
+
+
+
+### Single Curve - 48 Subplots
+
+```{r}
+#plot single accumulation curve using 48 subplots
+	accum_allsubplotsb <- specaccum(padat[c(1:12,13:24,25:36,37:48),])
+	plot(accum_allsubplotsb,xlab="subplots",ylab="species")
+```
+
+
+### Chaos Estimate - 40 Subplots
+
+```{r}
+#calculate Bray-Curtis dissimilarity between plots
+#First, aggregate subplot data
+	p1 <- apply(padat[1:12,],2,max)
+	p2 <- apply(padat[13:24,],2,max)
+	p3 <- apply(padat[25:36,],2,max)
+	p4 <- apply(padat[37:48,],2,max)
+# create new matrix to calculate pairwise plot dissimilarity
+	plots_spp <- rbind(p1,p2,p3,p4)
+#produce dissimilarity matrix
+	plots_bray_diss <- vegdist(plots_spp,method="bray")
+```
+
+```{r}
+specpool(plots_spp)
+```
+```{r}
+### read in species data
+
+species <- read_csv(here("data", "grassland_common_species_ex1.csv"))
+
+subplots_40 <- padat[c(1:10,13:22,25:34,37:46),]
+
+accum_all <- specaccum(subplots_40)
+
+# plot_sub <- plot(accum_all, xlab = "subplots", ylab = "species")
+
+native <- species %>%
+  filter(Native == 1)
+
+exotic <- species %>%
+  filter(Native == 0)
+
+native_wide <- native %>% 
+  pivot_wider(names_from = Code,
+              values_from = Native) %>% 
+  select(, 10:ncol(.))
+
+sub_native <- subplots_40 %>% 
+  select(any_of(names(native_wide)))
+
+
+```
+
+
+### Native
+
+```{r}
+#plot single accumulation curve using 40 subplots for native species
+
+subnative_list <- sub_native[c(1:10,13:22,25:34,37:46),] %>% 
+  drop_na()
+
+accum_allnative <- specaccum(subnative_list)
+plot(accum_allnative, xlab="subplots",ylab="species")
+
+```
+
+
+```{r}
+specpool(sub_native)
+```
+
+
+
+### Exotic
+
+```{r}
+exotic_wide <- exotic %>% 
+  pivot_wider(names_from = Code,
+              values_from = Native) %>% 
+  select(, 10:ncol(.))
+
+sub_exotic <- subplots_40 %>% 
+  select(any_of(names(exotic_wide)))
+```
+
+```{r}
+#plot single accumulation curve using 40 subplots for exotic species
+
+subexotic_list <- sub_exotic[c(1:10,13:22,25:34,37:46),] %>% 
+  drop_na()
+
+accum_allexotic <- specaccum(subexotic_list)
+plot(accum_allexotic, xlab="subplots",ylab="species")
+```
+
+```{r}
+specpool(sub_exotic)
+```
+
+## Bray-Curtis
+
+```{r}
+plots_bray_diss
+```
+
+### Native
+
+```{r}
+sub_native_clean <- sub_native %>% 
+  drop_na()
+
+#calculate Bray-Curtis dissimilarity between plots
+#First, aggregate subplot data
+	p1n <- apply(sub_native_clean[1:12,],2,max)
+	p2n <- apply(sub_native_clean[13:24,],2,max)
+	p3n <- apply(sub_native_clean[25:36,],2,max)
+	p4n <- apply(sub_native_clean[37:48,],2,max)
+# create new matrix to calculate pairwise plot dissimilarity
+	plots_spp_n <- rbind(p1n,p2n,p3n,p4n)
+#produce dissimilarity matrix
+plots_bray_diss_n <- vegdist(plots_spp_n,method="bray")
+```
+
+
+
+
+```{r}
+#Analyze cover data
+#Calculate area-weighted cover, total area sampled = 10 *0.25 + 2*2.5 = 7.5 sq m
+	p1_cov <- (2.5/7.5)*apply(covdat[1:10,],2,mean) + 
+			(5/7.5)*apply(covdat[11:12,],2,mean)
+	p2_cov <- (2.5/7.5)*apply(covdat[13:22,],2,mean) + 
+			(5/7.5)*apply(covdat[23:24,],2,mean)
+	p3_cov <- (2.5/7.5)*apply(covdat[25:34,],2,mean) + 
+			(5/7.5)*apply(covdat[35:36,],2,mean)
+	p4_cov <- (2.5/7.5)*apply(covdat[37:46,],2,mean) + 
+			(5/7.5)*apply(covdat[47:48,],2,mean)
+```
+
+```{r}
+#Analyze plot dissimilarity based on cover
+	plots_cov <- rbind(p1_cov,p2_cov,p3_cov,p4_cov)
+	plots_euclid_diss <- vegdist(plots_cov,method="euclidean")
+	plots_hclust <- hclust(plots_euclid_diss,method="average")		#cluster analysis of plots (contrived)
+		plot(plots_hclust)
+	plots_hclust_pa <- hclust(plots_bray_diss,method="average")
+		plot(plots_hclust_pa)
+```
+
+```{r}
+#Analyze plot diversity
+	plots_shannon <- diversity(plots_cov,index="shannon") 	#shannon H'
+	plots_simpson <- diversity(plots_cov,index="simpson")	#simpson diversity
+	plots_richness <- specnumber(plots_cov)					#species richness
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
