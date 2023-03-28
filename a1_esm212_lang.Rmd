@@ -20,20 +20,6 @@ library(dplyr)
 
 
 ```{r}
-### Read in data
-
-# cover_2022 <- read_csv(here("data", "grassland_dat_cover_2022.csv"))
-# 
-# cover <- read_csv(here("data", "grassland_dat_cover.csv"))
-# 
-# species <- read_csv(here("data", "grassland_common_species_ex1.csv"))
-# 
-# pa_2022 <- read_csv(here("data", "grassland_dat_pa_2022.csv"))
-# 
-# pa <- read_csv(here("data", "grassland_dat_pa.csv"))
-```
-
-```{r}
 #read presence-absence data
 
 grasspa <- read.csv(here("data", "grassland_dat_pa.csv"),header=TRUE)
@@ -47,16 +33,34 @@ padat <- grasspa[,4:40]	#plot x species P/A matrix in format for vegan analysis
 	covdat <- grasscov[,4:40]	#plot x species cover matrix in format for vegan analysis
 ```
 
+```{r}
+### read in 2023 data
+
+grasspa_2023 <- read_csv(here("data", "grassland_dat_pa_2023.csv"))
+padat_2023 <- grasspa_2023[,4:27]
+
+grasscov_2023 <- read_csv(here("data", "grassland_dat_cover_2023.csv"))
+covdat_2023 <- grasscov_2023[,4:27]
+
+```
 
 
-### Accumulation Curves - 10 Subplots
+## Accumulation Curves - 10 Subplots (2019 & 2023)
+
 
 ```{r}
-#create exact species accumulation curves for 4 plots using 10 subplots
+#create exact species accumulation curves for 4 plots using 10 subplots (2019)
 	accum1 <- specaccum(padat[1:10,]) 	#plot 1, subplots 1-10
 	accum2 <- specaccum(padat[13:22,])	#plot 2, subplots 1-10
 	accum3 <- specaccum(padat[25:34,])	#plot 3, subplots 1-10
 	accum4 <- specaccum(padat[37:46,])	#plot 4, subplots 1-10
+```
+
+```{r}
+#create exact species accumulation curves for 3 plots using 10 subplots (2023)
+	accum1_23 <- specaccum(padat_2023[1:10,]) 	#plot 1, subplots 1-10
+	accum2_23 <- specaccum(padat_2023[13:22,])	#plot 2, subplots 1-10
+	accum3_23 <- specaccum(padat_2023[24:33,])	#plot 3, subplots 1-10
 ```
 
 ```{r}
@@ -65,21 +69,34 @@ padat <- grasspa[,4:40]	#plot x species P/A matrix in format for vegan analysis
 		lines(accum2,col="red")
 		lines(accum3,col="blue")
 		lines(accum4,col="green")
-	 	text(10.1,9,"V")	#valley plot
-	 	text(10.1,14,"N") #North plot
-	 	text(10.1,16,"S") #South plot
-	 	text(10.1,18,"N2") #second north plot
+		lines(accum1_23, col = "orange")
+		lines(accum2_23, col = "skyblue")
+		lines(accum3_23, col = "yellow")
+	 	text(10.2,9,"V")	#valley plot
+	 	text(10.2,14,"N") #North plot
+	 	text(10.2,16,"S") #South plot
+	 	text(10.2,18,"N2") #second north plot
+	 	text(10.2, 10, "23") ### ? 2023 plot
+	 	text(10.2, 11, "23") ### ? 2023 plot
+	 	text(10.2, 15, "23") ### ? 2023 plot
 ```
 
 
-### Accumulation Curves - 12 Subplots
+## Accumulation Curves - 12 Subplots (2019 & 2023)
 
 ```{r}
-#create exact species accumulation curves for 4 plots using 12 subplots
+#create exact species accumulation curves for 4 plots using 12 subplots (2019)
 	accum1b <- specaccum(padat[1:12,]) 	#plot 1, subplots 1-10
 	accum2b <- specaccum(padat[13:24,])	#plot 2, subplots 1-10
 	accum3b <- specaccum(padat[25:36,])	#plot 3, subplots 1-10
 	accum4b <- specaccum(padat[37:48,])	#plot 4, subplots 1-10
+```
+
+```{r}
+#create exact species accumulation curves for 3 plots using 11-12 subplots (2023)
+	accum1b_23 <- specaccum(padat_2023[1:12,]) 	#plot 1, subplots 1-10
+	accum2b_23 <- specaccum(padat_2023[13:23,])	#plot 2, subplots 1-10
+	accum3b_23 <- specaccum(padat_2023[24:34,])	#plot 3, subplots 1-10
 ```
 
 ```{r}
@@ -88,33 +105,49 @@ padat <- grasspa[,4:40]	#plot x species P/A matrix in format for vegan analysis
 		lines(accum2b,col="red")
 		lines(accum3b,col="blue")
 		lines(accum4b,col="green")
-	 	text(12.1,9,"V")	#valley plot
-	 	text(12.1,14,"N") #North plot
-	 	text(12.1,16,"S") #South plot
-	 	text(12.1,22,"N2") #second north plot
+		lines(accum1b_23, col = "orange")
+		lines(accum2b_23, col = "skyblue")
+		lines(accum3b_23, col = "yellow")
+	 	text(12.1,11,"V")	#valley plot
+	 	text(12.1,15,"N") #North plot
+	 	text(12.1,17,"S") #South plot
+	 	text(12.1,23,"N2") #second north plot
+	 	text(12.1, 12, "23") ### ? 2023 plot
+	 	text(11.1, 12.5, "23") ### ? 2023 plot
+	 	text(11.1, 16, "23") ### ? 2023 plot
 ```
 
 
-### Single Curve - 40 Subplots
+## Single Curve - 40 Subplots
 
 ```{r}
-#plot single accumulation curve using 40 subplots
-	accum_allsubplots <- specaccum(padat[c(1:10,13:22,25:34,37:46),])
+#plot single accumulation curve using 40 (2019) and 30 (2023) subplots
+accum_allsubplots <- specaccum(padat[c(1:10,13:22,25:34,37:46),])
+accum_allsubplots_23 <- specaccum(padat_2023[c(1:10, 13:22, 24:33),])
+
 	plot(accum_allsubplots,xlab="subplots",ylab="species")
+	lines(accum_allsubplots_23, col="blue")
+	text(40.2, 34.5, "19")
+	text(30.3, 23, "23")
 ```
 
 
 
-### Single Curve - 48 Subplots
+## Single Curve - 48 Subplots
 
 ```{r}
-#plot single accumulation curve using 48 subplots
-	accum_allsubplotsb <- specaccum(padat[c(1:12,13:24,25:36,37:48),])
+#plot single accumulation curve using 48 (2019) and 34 (2023) subplots
+accum_allsubplotsb <- specaccum(padat[c(1:12,13:24,25:36,37:48),])
+accum_allsubplotsb_23 <- specaccum(padat_2023[c(1:12, 13:23, 24:34),])
+
 	plot(accum_allsubplotsb,xlab="subplots",ylab="species")
+	lines(accum_allsubplotsb_23, col="blue")
+	text(48, 37, "19")
+	text(35, 25, "23")
 ```
 
 
-### Chaos Estimate - 40 Subplots
+## Chao Estimate
 
 ```{r}
 #calculate Bray-Curtis dissimilarity between plots
@@ -129,9 +162,29 @@ padat <- grasspa[,4:40]	#plot x species P/A matrix in format for vegan analysis
 	plots_bray_diss <- vegdist(plots_spp,method="bray")
 ```
 
+**2019**
+
 ```{r}
 specpool(plots_spp)
 ```
+
+**2023**
+
+```{r}
+p1_23 <- apply(padat_2023[1:12,],2,max)
+p2_23 <- apply(padat_2023[13:23,],2,max)
+p3_23 <- apply(padat_2023[24:34,],2,max)
+
+plots_spp_23 <- rbind(p1_23,p2_23,p3_23)
+```
+
+```{r}
+specpool(plots_spp_23)
+```
+
+
+### Native
+
 ```{r}
 ### read in species data
 
@@ -139,7 +192,7 @@ species <- read_csv(here("data", "grassland_common_species_ex1.csv"))
 
 # subplots_40 <- padat[c(1:10,13:22,25:34,37:46),]
 
-accum_all <- specaccum(subplots_40)
+# accum_all <- specaccum(subplots_40)
 
 # plot_sub <- plot(accum_all, xlab = "subplots", ylab = "species")
 
@@ -148,7 +201,8 @@ native <- species %>%
   filter(is.na(Native) == F)
 
 exotic <- species %>%
-  filter(Native == 0)
+  filter(Native == 0) %>% 
+  filter(is.na(Native) == F)
 
 native_wide <- native %>% 
   pivot_wider(names_from = Code,
@@ -157,11 +211,10 @@ native_wide <- native %>%
 sub_native <- padat %>% 
   select(any_of(names(native_wide)))
 
+sub_native_23 <- padat_2023 %>% 
+  select(any_of(names(native_wide)))
 
 ```
-
-
-### Native
 
 ```{r}
 #plot single accumulation curve using 40 subplots for native species
@@ -170,13 +223,25 @@ subnative_list <- sub_native[c(1:10,13:22,25:34,37:46),] %>%
   drop_na()
 
 accum_allnative <- specaccum(subnative_list)
+accum_allnative_23 <- specaccum(sub_native_23[c(1:10, 13:22, 24:33),])
+
 plot(accum_allnative, xlab="subplots",ylab="species")
+lines(accum_allnative_23, col="green4")
+text(40.1, 26, "19")
+text(30.2, 13, "23")
 
 ```
 
+**2019**
 
 ```{r}
 specpool(sub_native)
+```
+
+**2023**
+
+```{r}
+specpool(sub_native_23)
 ```
 
 
@@ -186,10 +251,12 @@ specpool(sub_native)
 ```{r}
 exotic_wide <- exotic %>% 
   pivot_wider(names_from = Code,
-              values_from = Native) %>% 
-  select(, 10:ncol(.))
+              values_from = Native)
 
-sub_exotic <- subplots_40 %>% 
+sub_exotic <- padat %>% 
+  select(any_of(names(exotic_wide)))
+
+sub_exotic_23 <- padat_2023 %>% 
   select(any_of(names(exotic_wide)))
 ```
 
@@ -200,20 +267,50 @@ subexotic_list <- sub_exotic[c(1:10,13:22,25:34,37:46),] %>%
   drop_na()
 
 accum_allexotic <- specaccum(subexotic_list)
+accum_allexotic_23 <- specaccum(sub_exotic_23[c(1:10, 13:22, 24:33),])
+
 plot(accum_allexotic, xlab="subplots",ylab="species")
+lines(accum_allexotic_23, col="red2")
+text(40.1, 9, "19")
+text(32, 5, "23")
 ```
+
+**2019**
 
 ```{r}
 specpool(sub_exotic)
 ```
 
+**2023**
+
+```{r}
+specpool(sub_exotic_23)
+```
+
+
+
 ## Bray-Curtis
+
+**2019**
 
 ```{r}
 plots_bray_diss
 ```
 
+
+**2023**
+
+```{r}
+plots_bray_diss_23 <- vegdist(plots_spp_23,method="bray")
+
+plots_bray_diss_23
+```
+
+
+
 ### Native
+
+**2019**
 
 ```{r}
 # sub_native_clean <- sub_native
@@ -230,9 +327,34 @@ plots_bray_diss
 plots_bray_diss_n <- vegdist(plots_spp_n,method="bray")
 ```
 
+```{r}
+plots_bray_diss_n
+```
+
+**2023**
+
+```{r}
+#calculate Bray-Curtis dissimilarity between plots
+#First, aggregate subplot data
+	p1n_23 <- apply(sub_native_23[1:10,],2,max)
+	p2n_23 <- apply(sub_native_23[13:22,],2,max)
+	p3n_23 <- apply(sub_native_23[24:33,],2,max)
+
+# create new matrix to calculate pairwise plot dissimilarity
+	plots_spp_n_23 <- rbind(p1n_23,p2n_23,p3n_23)
+#produce dissimilarity matrix
+plots_bray_diss_n_23 <- vegdist(plots_spp_n_23,method="bray")
+```
+
+```{r}
+plots_bray_diss_n_23
+```
+
 
 
 ## Cover Data
+
+**2019**
 
 ```{r}
 #Analyze cover data
@@ -256,6 +378,30 @@ plots_bray_diss_n <- vegdist(plots_spp_n,method="bray")
 	plots_hclust_pa <- hclust(plots_bray_diss,method="average")
 		plot(plots_hclust_pa)
 ```
+
+**2023**
+
+```{r}
+#Analyze cover data
+#Calculate area-weighted cover, total area sampled = 10 *0.25 + 2*2.5 = 7.5 sq m
+	p1_cov_23 <- (2.5/7.5)*apply(covdat_2023[1:10,],2,mean) + 
+			(5/7.5)*apply(covdat_2023[11:12,],2,mean)
+	p2_cov_23 <- (2.5/7.5)*apply(covdat_2023[13:22,],2,mean) + 
+			(2.5/5)*apply(covdat_2023[23,],2,mean)
+	p3_cov_23 <- (2.5/7.5)*apply(covdat_2023[24:33,],2,mean) + 
+			(2.5/5)*apply(covdat_2023[34,],2,mean)
+```
+
+```{r}
+#Analyze plot dissimilarity based on cover
+	plots_cov_23 <- rbind(p1_cov_23,p2_cov_23,p3_cov_23)
+	plots_euclid_diss_23 <- vegdist(plots_cov_23,method="euclidean")
+	plots_hclust_23 <- hclust(plots_euclid_diss_23,method="average")		#cluster analysis of plots (contrived)
+		plot(plots_hclust_23)
+	plots_hclust_pa_23 <- hclust(plots_bray_diss_23,method="average")
+		plot(plots_hclust_pa_23)
+```
+
 
 
 ### Native
