@@ -406,6 +406,8 @@ plots_bray_diss_n_23
 
 ### Native
 
+**2019**
+
 ```{r}
 ### Filter by native
 
@@ -437,8 +439,37 @@ sub_native_cover <- covdat %>%
 ```
 
 
+**2023**
+
+```{r}
+sub_native_cov_23 <- covdat_2023 %>% 
+  select(any_of(names(native_wide)))
+```
+
+```{r}
+	p1_covn_23 <- (2.5/7.5)*apply(sub_native_cov_23[1:10,],2,mean) + 
+			(5/7.5)*apply(sub_native_cov_23[11:12,],2,mean)
+	p2_covn_23 <- (2.5/7.5)*apply(sub_native_cov_23[13:22,],2,mean) + 
+			(2.5/5)*apply(sub_native_cov_23[23,],2,mean)
+	p3_covn_23 <- (2.5/7.5)*apply(sub_native_cov_23[24:33,],2,mean) + 
+			(2.5/5)*apply(sub_native_cov_23[34,],2,mean)
+```
+
+```{r}
+#Analyze plot dissimilarity based on cover
+	plots_covn_23 <- rbind(p1_covn_23,p2_covn_23,p3_covn_23)
+	plots_euclid_diss_n23 <- vegdist(plots_covn_23,method="euclidean")
+	plots_hclust_n23 <- hclust(plots_euclid_diss_n23,method="average")		#cluster analysis of plots (contrived)
+		plot(plots_hclust_n23)
+	plots_hclust_pa_n23 <- hclust(plots_bray_diss_n_23,method="average")
+		plot(plots_hclust_pa_n23)
+```
+
+
 
 ## Plot Diversity
+
+**2019**
 
 ```{r}
 #Analyze plot diversity
@@ -451,8 +482,24 @@ sub_native_cover <- covdat %>%
 	plots_richness
 ```
 
+**2023**
+
+```{r}
+#Analyze plot diversity
+	plots_shannon_23 <- diversity(plots_cov_23,index="shannon") 	#shannon H'
+	plots_simpson_23 <- diversity(plots_cov_23,index="simpson")	#simpson diversity
+	plots_richness_23 <- specnumber(plots_cov_23)					#species richness
+	
+	plots_shannon_23
+	plots_simpson_23
+	plots_richness_23
+```
+
+
 
 ### Native
+
+**2019**
 
 ```{r}
 plots_sh_n <- diversity(plots_cov_n,index="shannon") 
@@ -464,14 +511,80 @@ plots_simp_n
 plots_rich_n
 ```
 
+**2023**
+
+```{r}
+plots_sh_n23 <- diversity(plots_covn_23,index="shannon") 
+plots_simp_n23 <- diversity(plots_covn_23,index="simpson")	#simpson diversity
+plots_rich_n23 <- specnumber(plots_covn_23)					#species richness
+
+plots_sh_n23
+plots_simp_n23
+plots_rich_n23
+```
 
 
 
+### Exotic
+
+**2019**
+
+```{r}
+sub_exotic_cover <- covdat %>% 
+  select(any_of(names(exotic_wide)))
+```
+
+```{r}
+p1_covex <- (2.5/7.5)*apply(sub_exotic_cover[1:10,],2,mean) + 
+			(5/7.5)*apply(sub_exotic_cover[11:12,],2,mean)
+	p2_covex <- (2.5/7.5)*apply(sub_exotic_cover[13:22,],2,mean) + 
+			(5/7.5)*apply(sub_exotic_cover[23:24,],2,mean)
+	p3_covex <- (2.5/7.5)*apply(sub_exotic_cover[25:34,],2,mean) + 
+			(5/7.5)*apply(sub_exotic_cover[35:36,],2,mean)
+	p4_covex <- (2.5/7.5)*apply(sub_exotic_cover[37:46,],2,mean) + 
+			(5/7.5)*apply(sub_exotic_cover[47:48,],2,mean)
+	
+	plots_cov_ex <- rbind(p1_covex,p2_covex,p3_covex,p4_covex)
+```
+
+```{r}
+plots_sh_ex <- diversity(plots_cov_ex,index="shannon") 	#shannon H'
+plots_simp_ex <- diversity(plots_cov_ex,index="simpson")	#simpson diversity
+plots_rich_ex <- specnumber(plots_cov_ex)					#species richness
+	
+plots_sh_ex
+plots_simp_ex
+plots_rich_ex
+```
 
 
+**2023**
 
+```{r}
+sub_exotic_cover23 <- covdat_2023 %>% 
+  select(any_of(names(exotic_wide)))
+```
 
+```{r}
+p1_cov_ex23 <- (2.5/7.5)*apply(sub_exotic_cover23[1:10,],2,mean) + 
+			(5/7.5)*apply(sub_exotic_cover23[11:12,],2,mean)
+	p2_cov_ex23 <- (2.5/7.5)*apply(sub_exotic_cover23[13:22,],2,mean) + 
+			(2.5/5)*apply(sub_exotic_cover23[23,],2,mean)
+	p3_cov_ex23 <- (2.5/7.5)*apply(sub_exotic_cover23[24:33,],2,mean) + 
+			(2.5/5)*apply(sub_exotic_cover23[34,],2,mean)
+	
+		plots_cov_ex23 <- rbind(p1_cov_ex23,p2_cov_ex23,p3_cov_ex23)
+```
 
+```{r}
+plots_sh_ex23 <- diversity(plots_cov_ex23,index="shannon") 	#shannon H'
+plots_simp_ex23 <- diversity(plots_cov_ex23,index="simpson")	#simpson diversity
+plots_rich_ex23 <- specnumber(plots_cov_ex23)					#species richness
+	
+plots_sh_ex23
+plots_simp_ex23
+plots_rich_ex23
+```
 
 
 
