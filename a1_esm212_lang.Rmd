@@ -16,6 +16,7 @@ library(janitor)
 library(vegan)
 library(tidyr)
 library(dplyr)
+library(kableExtra)
 ```
 
 
@@ -45,6 +46,8 @@ covdat_2023 <- grasscov_2023[,4:27]
 ```
 
 
+# 1. Species Richness
+
 ## Accumulation Curves - 10 Subplots (2019 & 2023)
 
 
@@ -63,7 +66,7 @@ covdat_2023 <- grasscov_2023[,4:27]
 	accum3_23 <- specaccum(padat_2023[24:33,])	#plot 3, subplots 1-10
 ```
 
-```{r}
+```{r figure 1, fig.align='center', fig.cap= "Figure 1: Plant species accumulation curves for 2019 and 2023 utilizing 10 subplots per plot. 4 plots were sampled in 2019. 3 plots were sampled in 2023. Plots were located in the valley (V) and on the north (N and N2) and south (S) slopes."}
 #plot accumulation curves for each plot
 	plot(accum1,ylim=c(0,20),xlab="subplots",ylab="species")
 		lines(accum2,col="red")
@@ -76,9 +79,9 @@ covdat_2023 <- grasscov_2023[,4:27]
 	 	text(10.2,14,"N") #North plot
 	 	text(10.2,16,"S") #South plot
 	 	text(10.2,18,"N2") #second north plot
-	 	text(10.2, 10, "N23") ### ? 2023 plot
-	 	text(10.2, 11, "S23") ### ? 2023 plot
-	 	text(10.2, 15, "V23") ### ? 2023 plot
+	 	text(10.2, 10, "V23") ### V 2023 plot
+	 	text(10.2, 11, "N23") ### N 2023 plot
+	 	text(10.2, 15, "S23") ### S 2023 plot
 ```
 
 
@@ -99,7 +102,7 @@ covdat_2023 <- grasscov_2023[,4:27]
 	accum3b_23 <- specaccum(padat_2023[24:34,])	#plot 3, subplots 1-10
 ```
 
-```{r}
+```{r figure 2, fig.align='center', fig.cap="Figure 2: Plant species accumulation curves for 2019 and 2023 utilizing 12 subplots per plot. 4 plots were sampled in 2019. 3 plots were sampled in 2023. Plots were located in the valley (V) and on the north (N and N2) and south (S) slopes."}
 #plot accumulation curves for each plot, with subplots 11 and 12
 	plot(accum1b,ylim=c(0,25),xlab="subplots",ylab="species")
 		lines(accum2b,col="red")
@@ -112,9 +115,9 @@ covdat_2023 <- grasscov_2023[,4:27]
 	 	text(12.1,15,"N") #North plot
 	 	text(12.1,17,"S") #South plot
 	 	text(12.1,23,"N2") #second north plot
-	 	text(12.1, 12, "N23") ### ? 2023 plot
-	 	text(11.1, 12.5, "S23") ### ? 2023 plot
-	 	text(11.1, 16, "V23") ### ? 2023 plot
+	 	text(12.1, 12, "V23") ### valley 2023 plot
+	 	text(11.1, 12.5, "N23") ### north 2023 plot
+	 	text(11.1, 16, "S23") ### south 2023 plot
 ```
 
 
