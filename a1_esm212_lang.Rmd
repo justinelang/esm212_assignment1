@@ -127,30 +127,32 @@ covdat_2023 <- grasscov_2023[,4:27]
 
 ### Single Curve - 40 Subplots
 
-```{r}
+```{r figure 3, fig.align='center', fig.cap="Figure 3: The accumulated number of plant species found in all 40 (2019) and 30 (2023) subplots."}
+
 #plot single accumulation curve using 40 (2019) and 30 (2023) subplots
 accum_allsubplots <- specaccum(padat[c(1:10,13:22,25:34,37:46),])
 accum_allsubplots_23 <- specaccum(padat_2023[c(1:10, 13:22, 24:33),])
 
 	plot(accum_allsubplots,xlab="subplots",ylab="species")
 	lines(accum_allsubplots_23, col="blue")
-	text(40.2, 34.5, "19")
-	text(30.3, 23, "23")
+	text(40.2, 34.5, "'19")
+	text(30.3, 23, "'23")
 ```
 
 
 
 ### Single Curve - 48 Subplots
 
-```{r}
+```{r fig 4, fig.align='center', fig.cap="Figure 4: The accumulated number of plant species found in all 48 (2019) and 34 (2023) subplots."}
+
 #plot single accumulation curve using 48 (2019) and 34 (2023) subplots
 accum_allsubplotsb <- specaccum(padat[c(1:12,13:24,25:36,37:48),])
 accum_allsubplotsb_23 <- specaccum(padat_2023[c(1:12, 13:23, 24:34),])
 
 	plot(accum_allsubplotsb,xlab="subplots",ylab="species")
 	lines(accum_allsubplotsb_23, col="blue")
-	text(48, 37, "19")
-	text(35, 25, "23")
+	text(48, 37, "'19")
+	text(35, 25, "'23")
 ```
 
 
@@ -172,7 +174,9 @@ accum_allsubplotsb_23 <- specaccum(padat_2023[c(1:12, 13:23, 24:34),])
 **2019**
 
 ```{r}
-specpool(plots_spp)
+specpool(plots_spp) %>% 
+  kable(caption = "Chao Estimate 2019 Data") %>% 
+  kable_classic(position = "center")
 ```
 
 **2023**
@@ -186,7 +190,9 @@ plots_spp_23 <- rbind(p1_23,p2_23,p3_23)
 ```
 
 ```{r}
-specpool(plots_spp_23)
+specpool(plots_spp_23) %>% 
+  kable(caption = "Chao Estimate 2023 Data") %>% 
+  kable_classic(position = "center")
 ```
 
 ## 1c)
@@ -224,7 +230,8 @@ sub_native_23 <- padat_2023 %>%
 
 ```
 
-```{r}
+```{r fig 5, fig.align='center', fig.cap="Figure 5: The accumulated number of native plant species found in 40 (2019) and 30 (2023) subplots."}
+
 #plot single accumulation curve using 40 subplots for native species
 
 subnative_list <- sub_native[c(1:10,13:22,25:34,37:46),] %>% 
@@ -235,21 +242,25 @@ accum_allnative_23 <- specaccum(sub_native_23[c(1:10, 13:22, 24:33),])
 
 plot(accum_allnative, xlab="subplots",ylab="species")
 lines(accum_allnative_23, col="green4")
-text(40.1, 26, "19")
-text(30.2, 13, "23")
+text(40.1, 26, "'19")
+text(30.2, 13, "'23")
 
 ```
 
 **2019**
 
 ```{r}
-specpool(sub_native)
+specpool(sub_native) %>% 
+  kable(caption = "Chao Estimate 2019 Native Species") %>% 
+  kable_classic(position = "center")
 ```
 
 **2023**
 
 ```{r}
-specpool(sub_native_23)
+specpool(sub_native_23) %>% 
+  kable(caption = "Chao Estimate 2023 Native Species") %>% 
+  kable_classic(position = "center")
 ```
 
 
@@ -269,7 +280,8 @@ sub_exotic_23 <- padat_2023 %>%
   select(any_of(names(exotic_wide)))
 ```
 
-```{r}
+```{r fig 6, fig.align='center', fig.cap="Figure 6: The accumulated number of exotic plant species found in 40 (2019) and 30 (2023) subplots."}
+
 #plot single accumulation curve using 40 subplots for exotic species
 
 subexotic_list <- sub_exotic[c(1:10,13:22,25:34,37:46),] %>% 
@@ -280,20 +292,24 @@ accum_allexotic_23 <- specaccum(sub_exotic_23[c(1:10, 13:22, 24:33),])
 
 plot(accum_allexotic, xlab="subplots",ylab="species")
 lines(accum_allexotic_23, col="red2")
-text(40.1, 9, "19")
-text(32, 5, "23")
+text(40.1, 9, "'19")
+text(32, 5, "'23")
 ```
 
 **2019**
 
 ```{r}
-specpool(sub_exotic)
+specpool(sub_exotic) %>% 
+  kable(caption = "Chao Estimate 2019 Exotic Species") %>% 
+  kable_classic(position = "center")
 ```
 
 **2023**
 
 ```{r}
-specpool(sub_exotic_23)
+specpool(sub_exotic_23) %>% 
+  kable(caption = "Chao Estimate 2023 Exotic Plants") %>% 
+  kable_classic(position = "center")
 ```
 
 **How do accumulation curves and estimated sizes of species pools compare for native compared to exotic species?**
@@ -310,7 +326,7 @@ Answer here.
 **2019**
 
 ```{r}
-plots_bray_diss
+plots_bray_diss 
 ```
 
 
@@ -465,9 +481,9 @@ sub_native_cov_23 <- covdat_2023 %>%
 ```{r}
 	p1_covn_23 <- (2.5/7.5)*apply(sub_native_cov_23[1:10,],2,mean) + 
 			(5/7.5)*apply(sub_native_cov_23[11:12,],2,mean)
-	p2_covn_23 <- (2.5/7.5)*apply(sub_native_cov_23[13:22,],2,mean) + 
+	p2_covn_23 <- (2.5/5)*apply(sub_native_cov_23[13:22,],2,mean) + 
 			(2.5/5)*apply(sub_native_cov_23[23,],2,mean)
-	p3_covn_23 <- (2.5/7.5)*apply(sub_native_cov_23[24:33,],2,mean) + 
+	p3_covn_23 <- (2.5/5)*apply(sub_native_cov_23[24:33,],2,mean) + 
 			(2.5/5)*apply(sub_native_cov_23[34,],2,mean)
 ```
 
@@ -501,9 +517,17 @@ Answer here.
 	plots_simpson <- diversity(plots_cov,index="simpson")	#simpson diversity
 	plots_richness <- specnumber(plots_cov)					#species richness
 	
-	plots_shannon
-	plots_simpson
-	plots_richness
+	plots_shannon %>% 
+	  kable(caption = "Shannon Diversity 2019") %>% 
+  kable_classic(position = "center")
+	
+	plots_simpson %>% 
+	  kable(caption = "Simpson Diversity 2019") %>% 
+  kable_classic(position = "center")
+	
+	plots_richness %>% 
+	  kable(caption = "Species Richness 2019") %>% 
+  kable_classic(position = "center")
 ```
 
 **2023**
@@ -514,9 +538,17 @@ Answer here.
 	plots_simpson_23 <- diversity(plots_cov_23,index="simpson")	#simpson diversity
 	plots_richness_23 <- specnumber(plots_cov_23)					#species richness
 	
-	plots_shannon_23
-	plots_simpson_23
-	plots_richness_23
+	plots_shannon_23 %>% 
+	  kable(caption = "Shannon Diversity 2023") %>% 
+  kable_classic(position = "center")
+	
+	plots_simpson_23 %>% 
+	  kable(caption = "Simpson Diversity 2023") %>% 
+  kable_classic(position = "center")
+	
+	plots_richness_23 %>% 
+	  kable(caption = "Species Richness 2023") %>% 
+  kable_classic(position = "center")
 ```
 
 ## 3c & 3d)
@@ -530,9 +562,17 @@ plots_sh_n <- diversity(plots_cov_n,index="shannon")
 plots_simp_n <- diversity(plots_cov_n,index="simpson")	#simpson diversity
 plots_rich_n <- specnumber(plots_cov_n)					#species richness
 
-plots_sh_n
-plots_simp_n
-plots_rich_n
+plots_sh_n %>% 
+  kable(caption = "Native Shannon Diversity 2019") %>% 
+  kable_classic(position = "center")
+
+plots_simp_n %>% 
+  kable(caption = "Native Simpson Diversity 2019") %>% 
+  kable_classic(position = "center")
+
+plots_rich_n %>% 
+  kable(caption = "Native Species Richness 2019") %>% 
+  kable_classic(position = "center")
 ```
 
 **2023**
@@ -542,9 +582,17 @@ plots_sh_n23 <- diversity(plots_covn_23,index="shannon")
 plots_simp_n23 <- diversity(plots_covn_23,index="simpson")	#simpson diversity
 plots_rich_n23 <- specnumber(plots_covn_23)					#species richness
 
-plots_sh_n23
-plots_simp_n23
-plots_rich_n23
+plots_sh_n23 %>% 
+  kable(caption = "Native Shannon Diversity 2023") %>% 
+  kable_classic(position = "center")
+
+plots_simp_n23 %>% 
+  kable(caption = "Native Simpson Diversity 2023") %>% 
+  kable_classic(position = "center")
+
+plots_rich_n23 %>% 
+  kable(caption = "Native Species Richness 2023") %>% 
+  kable_classic(position = "center")
 ```
 
 
@@ -576,9 +624,17 @@ plots_sh_ex <- diversity(plots_cov_ex,index="shannon") 	#shannon H'
 plots_simp_ex <- diversity(plots_cov_ex,index="simpson")	#simpson diversity
 plots_rich_ex <- specnumber(plots_cov_ex)					#species richness
 	
-plots_sh_ex
-plots_simp_ex
-plots_rich_ex
+plots_sh_ex %>% 
+  kable(caption = "Exotic Shannon Diversity 2019") %>% 
+  kable_classic(position = "center")
+
+plots_simp_ex %>% 
+  kable(caption = "Exotic Simpson Diversity 2019") %>% 
+  kable_classic(position = "center")
+
+plots_rich_ex %>% 
+  kable(caption = "Exotic Species Richess 2019") %>% 
+  kable_classic(position = "center")
 ```
 
 
@@ -592,9 +648,9 @@ sub_exotic_cover23 <- covdat_2023 %>%
 ```{r}
 p1_cov_ex23 <- (2.5/7.5)*apply(sub_exotic_cover23[1:10,],2,mean) + 
 			(5/7.5)*apply(sub_exotic_cover23[11:12,],2,mean)
-	p2_cov_ex23 <- (2.5/7.5)*apply(sub_exotic_cover23[13:22,],2,mean) + 
+	p2_cov_ex23 <- (2.5/5)*apply(sub_exotic_cover23[13:22,],2,mean) + 
 			(2.5/5)*apply(sub_exotic_cover23[23,],2,mean)
-	p3_cov_ex23 <- (2.5/7.5)*apply(sub_exotic_cover23[24:33,],2,mean) + 
+	p3_cov_ex23 <- (2.5/5)*apply(sub_exotic_cover23[24:33,],2,mean) + 
 			(2.5/5)*apply(sub_exotic_cover23[34,],2,mean)
 	
 		plots_cov_ex23 <- rbind(p1_cov_ex23,p2_cov_ex23,p3_cov_ex23)
@@ -605,9 +661,17 @@ plots_sh_ex23 <- diversity(plots_cov_ex23,index="shannon") 	#shannon H'
 plots_simp_ex23 <- diversity(plots_cov_ex23,index="simpson")	#simpson diversity
 plots_rich_ex23 <- specnumber(plots_cov_ex23)					#species richness
 	
-plots_sh_ex23
-plots_simp_ex23
-plots_rich_ex23
+plots_sh_ex23 %>% 
+  kable(caption = "Exotic Shannon Diversity 2023") %>% 
+  kable_classic(position = "center")
+
+plots_simp_ex23 %>% 
+  kable(caption = "Exotic Simpson Diversity 2023") %>% 
+  kable_classic(position = "center")
+
+plots_rich_ex23 %>% 
+  kable(caption = "Exotic Species Richness 2023") %>% 
+  kable_classic(position = "center")
 ```
 
 
