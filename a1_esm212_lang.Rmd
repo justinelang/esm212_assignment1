@@ -48,7 +48,9 @@ covdat_2023 <- grasscov_2023[,4:27]
 
 # 1. Species Richness
 
-## Accumulation Curves - 10 Subplots (2019 & 2023)
+## 1a)
+
+### Accumulation Curves - 10 Subplots (2019 & 2023)
 
 
 ```{r}
@@ -85,7 +87,7 @@ covdat_2023 <- grasscov_2023[,4:27]
 ```
 
 
-## Accumulation Curves - 12 Subplots (2019 & 2023)
+### Accumulation Curves - 12 Subplots (2019 & 2023)
 
 ```{r}
 #create exact species accumulation curves for 4 plots using 12 subplots (2019)
@@ -121,7 +123,9 @@ covdat_2023 <- grasscov_2023[,4:27]
 ```
 
 
-## Single Curve - 40 Subplots
+## 1b)
+
+### Single Curve - 40 Subplots
 
 ```{r}
 #plot single accumulation curve using 40 (2019) and 30 (2023) subplots
@@ -136,7 +140,7 @@ accum_allsubplots_23 <- specaccum(padat_2023[c(1:10, 13:22, 24:33),])
 
 
 
-## Single Curve - 48 Subplots
+### Single Curve - 48 Subplots
 
 ```{r}
 #plot single accumulation curve using 48 (2019) and 34 (2023) subplots
@@ -150,7 +154,7 @@ accum_allsubplotsb_23 <- specaccum(padat_2023[c(1:12, 13:23, 24:34),])
 ```
 
 
-## Chao Estimate
+### Chao Estimate
 
 ```{r}
 #calculate Bray-Curtis dissimilarity between plots
@@ -185,6 +189,7 @@ plots_spp_23 <- rbind(p1_23,p2_23,p3_23)
 specpool(plots_spp_23)
 ```
 
+## 1c)
 
 ### Native
 
@@ -248,6 +253,7 @@ specpool(sub_native_23)
 ```
 
 
+## 1d)
 
 ### Exotic
 
@@ -290,9 +296,16 @@ specpool(sub_exotic)
 specpool(sub_exotic_23)
 ```
 
+**How do accumulation curves and estimated sizes of species pools compare for native compared to exotic species?**
+
+Answer here. 
 
 
-## Bray-Curtis
+# 2. Community Dissimilarity
+
+## 2a)
+
+### Bray-Curtis
 
 **2019**
 
@@ -309,7 +322,7 @@ plots_bray_diss_23 <- vegdist(plots_spp_23,method="bray")
 plots_bray_diss_23
 ```
 
-
+## 2c)
 
 ### Native
 
@@ -353,9 +366,9 @@ plots_bray_diss_n_23 <- vegdist(plots_spp_n_23,method="bray")
 plots_bray_diss_n_23
 ```
 
+## 2b)
 
-
-## Cover Data
+### Cover Data
 
 **2019**
 
@@ -405,7 +418,7 @@ plots_bray_diss_n_23
 		plot(plots_hclust_pa_23)
 ```
 
-
+## 2d)
 
 ### Native
 
@@ -469,8 +482,16 @@ sub_native_cov_23 <- covdat_2023 %>%
 ```
 
 
+**Briefly discuss the patterns of plot dissimilarity based on P/A compared to cover data. How do they differ and why? Next, briefly discuss patterns of plot dissimilarity based on all species vs. native species only.**
 
-## Plot Diversity
+Answer here.
+
+
+# 3. Community Evenness
+
+## 3a & 3b)
+
+### Plot Diversity
 
 **2019**
 
@@ -498,7 +519,7 @@ sub_native_cov_23 <- covdat_2023 %>%
 	plots_richness_23
 ```
 
-
+## 3c & 3d)
 
 ### Native
 
@@ -590,7 +611,9 @@ plots_rich_ex23
 ```
 
 
+**How does the rank order of diversity among plots vary depending on whether you use the Shannon or Simpson index? How does the pattern of native species diversity compare to exotic species diversity?**
 
+Answer here. 
 
 
 
