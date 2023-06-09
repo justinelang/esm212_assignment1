@@ -314,7 +314,11 @@ specpool(sub_exotic_23) %>%
 
 **How do accumulation curves and estimated sizes of species pools compare for native compared to exotic species?**
 
-Answer here. 
+The estimated species pools were similar to the observed species for both native and exotic species. The sizes of the native species pools were larger than the exotic. 27 native species were observed in 2019, which aligns with the Chao estimate of 27 (with Jackknife and Bootstrap estimates ranging from 24-29 species). 14 native species were observed in 2023, similar to the Chao estimate of 15 (with the other estimates ranging from 15-16). 10 exotic species were observed in 2019 and 5 in 2023, which are also very similar to the Chao and other estimates. 
+
+The 2019 native species curve increases the most gradually (the slope is steepest between subplots 1 and 10) and is slow to level off (starts to level off around subplot 25 but doesn't really flatten until between subplots 30 and 40), so there still could have been more species than observed like some of the species pools estimates suggest. The 2023 native species accumulation curve starts to level off a little sooner (steepest between subplots 1 and 5; begins to level off after subplot 10), but follows a similar trend. The 2019 exotic species accumulation curve levels off sooner than the native species one (steepest between subplots 1 and 6) and demonstrates a much wider variability. The 2023 exotic species curve also levels off very quickly (only steepest between subplots 1 and 2). 
+
+Ultimately, the accumulated number of native species seemed to increase more steadily with each plot and was larger overall, while the number of exotic species didn't increase much after a smaller number of plots and was smaller than the number of native species recorded.  
 
 
 # 2. Community Dissimilarity
@@ -498,9 +502,17 @@ sub_native_cov_23 <- covdat_2023 %>%
 ```
 
 
-**Briefly discuss the patterns of plot dissimilarity based on P/A compared to cover data. How do they differ and why? Next, briefly discuss patterns of plot dissimilarity based on all species vs. native species only.**
+**Briefly discuss the patterns of plot dissimilarity based on P/A compared to cover data. How do they differ and why?**
 
-Answer here.
+For the 2019 cover data, plots 1 (valley) and 2 (south) and plots 3 and 4 (north) were most similar to each other, while for the 2019 P/A data, plots 1 (valley) and 3 (north 2) were most similar to each other and plot 4 (north) sat as an outgroup. For the 2023 cover data, plots 2 (north) and 3 (south) were most similar to each other with plot 1 (valley) as an outgroup, while for the 2023 P/A data, all the plots seemed to have equal levels of similarity. 
+
+While P/A data gives a sense of if a species is present in a plot or subplot, cover data gives a better sense of that species abundance and how common it is throughout the plots. For example, we often saw both bromegrass and wildoat in the same subplots, but sometimes the percent cover would consist mostly of one or the other rather than equal of both. For this reason, the plot dissimilarity can differ depending on if you're looking at P/A or cover since similar P/A doesn't necessarily mean percent cover is the same. 
+
+**Next, briefly discuss patterns of plot dissimilarity based on all species vs. native species only.**
+
+For the 2019 native species cover data, plots 1 (valley) and 2 (south) were most similar, but this time plot 4 (north) sat as an outgroup, while the 2019 native species P/A data followed a similar pattern. For both the 2023 cover data and P/A data, plots 1 (valley) and 2 (north) were the most similar, with the remaining plot 3 (south) as the outgroup. 
+
+There were a handful of exotic species that often dominated the percent cover in many subplots, particularly with bromegrass. When considering only native species, the dissimilarity between plots changes. It's possible that the presence of exotic species could have changed the plot overall dissimilarity between 2019 and 2023, though more sampling may be needed to test that idea. 
 
 
 # 3. Community Evenness
@@ -675,9 +687,16 @@ plots_rich_ex23 %>%
 ```
 
 
-**How does the rank order of diversity among plots vary depending on whether you use the Shannon or Simpson index? How does the pattern of native species diversity compare to exotic species diversity?**
+**How does the rank order of diversity among plots vary depending on whether you use the Shannon or Simpson index?**
 
-Answer here. 
+For 2019, the rank order from highest to lowest based on the Shannon index was plot 3, plot 4, plot 1, plot 2. Based on the Simpson index, the rank was the same. For 2023, similarly, the rank order based on the Shannon index was plot 3, plot 1, plot 2. Based on the Simpson index, the rank was the same. 
+
+**How does the pattern of native species diversity compare to exotic species diversity?**
+
+For 2019, the native species rank order based on the Shannon index was plot 2, plot 4, plot 1, plot 3, and the exotic species rank order was plot 3, plot 2, plot 4, plot 1. Based on the Simpson index, the native species rank order was plot 2, plot 1, plot 4, plot 3, and the exotic species rank order was plot 3, plot 4, plot 2, plot 1. The Shannon index seemingly took the native species richness in plot 4 and the exotic species richness in plot 2 into greater account than the Simpson index. Overall, there was higher native species diversity in plot 2 and higher exotic species diversity in plot 3. 
+
+For 2023, the native species rank order based on the Shannon index was plot 3, plot 1, plot 2, and the exotic species rank order was plot 3, plot 2, plot 1. Based on the Simpson index, both the native species and exotic species rank order were the same as for the Shannon index. Overall, the native and exotic species diversity were both highest in plot 3, while there was higher native species diversity in plot 1 and higher exotic species diversity in plot 2. 
+
 
 
 
